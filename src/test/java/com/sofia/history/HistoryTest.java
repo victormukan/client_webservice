@@ -1,13 +1,11 @@
 package com.sofia.history;
 
-import com.google.gson.Gson;
-import com.sofia.rest.ClientService;
+import com.sofia.BaseTest;
 import com.sofia.dto.HistoryRecord;
 import com.sofia.dto.MathOperation;
 import com.sofia.dto.OperationType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import com.sofia.util.GsonConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,10 +13,8 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class HistoryTest {
+public class HistoryTest extends BaseTest {
     private static final Logger LOG = LogManager.getLogger(HistoryTest.class);
-    Gson converter = GsonConverter.getConverter();
-    ClientService clientService = new ClientService();
 
     @BeforeMethod
     public void postTestHistory() {

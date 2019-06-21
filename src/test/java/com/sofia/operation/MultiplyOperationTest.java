@@ -1,12 +1,9 @@
 package com.sofia.operation;
 
-import com.google.gson.Gson;
 import com.sofia.BaseTest;
 import com.sofia.dto.HistoryRecord;
 import com.sofia.dto.MathOperation;
 import com.sofia.dto.OperationType;
-import com.sofia.rest.ClientService;
-import com.sofia.util.GsonConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.DataProvider;
@@ -17,8 +14,6 @@ import static org.testng.Assert.assertNotNull;
 
 public class MultiplyOperationTest extends BaseTest {
     private static final Logger LOG = LogManager.getLogger(MultiplyOperationTest.class);
-    private Gson converter = GsonConverter.getConverter();
-    ClientService clientService = new ClientService();
 
     @DataProvider(name = "multiplyParams")
     public static Object[][] credentials() {
