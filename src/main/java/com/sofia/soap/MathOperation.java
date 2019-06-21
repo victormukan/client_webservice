@@ -35,9 +35,18 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class MathOperation {
 
-    protected double firstNumber;
-    protected OperationType operationType;
-    protected double secondNumber;
+    public double firstNumber;
+    public OperationType operationType;
+    public double secondNumber;
+
+    public MathOperation() {
+    }
+
+    public MathOperation(double firstNumber, OperationType operationType, double secondNumber) {
+        this.firstNumber = firstNumber;
+        this.operationType = operationType;
+        this.secondNumber = secondNumber;
+    }
 
     /**
      * Gets the value of the firstNumber property.

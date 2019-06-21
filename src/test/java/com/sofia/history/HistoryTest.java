@@ -11,7 +11,6 @@ import com.sofia.util.GsonConverter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -23,17 +22,14 @@ public class HistoryTest {
 
     @BeforeMethod
     public void postTestHistory() {
-        try {
-            MathOperation operation = new MathOperation(3, 4, OperationType.MULTIPLY);
-            HistoryRecord record = clientService.doMathOperation(operation);
-            System.out.println(converter.toJson(record));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        MathOperation operation = new MathOperation(3, 4, OperationType.MULTIPLY);
+        HistoryRecord record = clientService.doMathOperation(operation);
+        System.out.println(converter.toJson(record));
+
     }
 
     @Test
-    public void testAdd() throws IOException {
+    public void testAdd() {
         MathOperation operation = new MathOperation(1, 4, OperationType.ADD);
         HistoryRecord record = clientService.doMathOperation(operation);
         assertNotNull(record);
@@ -43,13 +39,13 @@ public class HistoryTest {
     }
 
     @Test
-    public void testGetLimitedHistory() throws IOException {
+    public void testGetLimitedHistory() {
         List<HistoryRecord> history = clientService.getLimitedHistory("1m");
         LOG.info(converter.toJson(history));
     }
 
     @Test
-    public void testGetHistoryRecordById() throws IOException {
+    public void testGetHistoryRecordById() {
         HistoryRecord record = clientService.getHistoryRecordById(4);
         LOG.info(converter.toJson(record));
     }

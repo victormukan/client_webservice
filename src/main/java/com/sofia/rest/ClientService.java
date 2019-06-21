@@ -37,54 +37,74 @@ public class ClientService {
         return history;
     }
 
-    public List<HistoryRecord> getLimitedHistory(String limitValue) throws IOException{
+    public List<HistoryRecord> getLimitedHistory(String limitValue) {
         Request request = new Request.Builder()
                 .url(baseUrl + "/history?limit=" + limitValue)
                 .build();
 
         Call call = client.newCall(request);
-        Response response = call.execute();
+        List<HistoryRecord> history = null;
+        try {
+            Response response = call.execute();
 
-        Type listType = new TypeToken<ArrayList<HistoryRecord>>(){}.getType();
-        return converter.fromJson(response.body().string(), listType);
+            Type listType = new TypeToken<ArrayList<HistoryRecord>>() {
+            }.getType();
+            history = converter.fromJson(response.body().string(), listType);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return history;
     }
 
-    public HistoryRecord getHistoryRecordById(int id) throws IOException{
+    public HistoryRecord getHistoryRecordById(int id) {
         Request request = new Request.Builder()
                 .url(baseUrl + "/history/" + id)
                 .build();
 
         Call call = client.newCall(request);
-        Response response = call.execute();
 
-        return converter.fromJson(response.body().string(), HistoryRecord.class);
+        HistoryRecord record = null;
+        try {
+            Response response = call.execute();
+            record = converter.fromJson(response.body().string(), HistoryRecord.class);
+        } catch (IOException e) {
+                e.printStackTrace();
+            }
+        return record;
     }
 
-    public Integer getHistorySize() throws IOException{
+    public Integer getHistorySize() {
         Request request = new Request.Builder()
                 .url(baseUrl + "/history/size")
                 .build();
 
         Call call = client.newCall(request);
-        Response response = call.execute();
-
-        return Integer.valueOf(response.body().string());
+        Integer size = null;
+        try {
+            Response response = call.execute();
+            size = Integer.valueOf(response.body().string());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return size;
     }
 
-    public HistoryRecord doMathOperation(MathOperation operation) throws IOException {
-        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    public HistoryRecord doMathOperation(MathOperation operation) {
+        HistoryRecord record = null;
+        try {
+            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            RequestBody body = RequestBody.create(JSON, converter.toJson(operation));
+            Request request = new Request.Builder()
+                    .url(baseUrl + "/math")
+                    .post(body)
+                    .build();
+            Call call = client.newCall(request);
+            Response response = call.execute();
 
-        RequestBody body = RequestBody.create(JSON, converter.toJson(operation));
-
-        Request request = new Request.Builder()
-                .url(baseUrl + "/math")
-                .post(body)
-                .build();
-
-        Call call = client.newCall(request);
-        Response response = call.execute();
-
-        return converter.fromJson(response.body().string(), HistoryRecord.class);
+            record =converter.fromJson(response.body().string(), HistoryRecord.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return record;
     }
-
 }
